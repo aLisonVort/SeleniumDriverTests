@@ -171,7 +171,6 @@ namespace SeleniumTest
         [Test, Order(6)]
         [Ignore("TimeOut no such alert")]
         public void ContextMenutest()
-
         {
             IWebElement contextMenulink = driver.FindElement(By.LinkText("Context Menu"));
             contextMenulink.Click();
@@ -630,7 +629,6 @@ namespace SeleniumTest
         }
 
         [Test, Order(30)]
-        // [Ignore("not finished")]
         public void NestedFrames()
         {
             driver.Navigate().GoToUrl("http://the-internet.herokuapp.com/nested_frames");
@@ -650,7 +648,6 @@ namespace SeleniumTest
             string expectedNoFramesTagText = "Frames are not rendering.";
 
             Assert.AreEqual(expectedNoFramesTagText, actualNoFramesTagText);
-
         }
 
         [TearDown]
@@ -667,5 +664,4 @@ namespace SeleniumTest
             driver.Quit();
         }
     }
-
 }
