@@ -171,6 +171,7 @@ namespace SeleniumTest
         [Test, Order(6)]
         [Ignore("TimeOut no such alert")]
         public void ContextMenutest()
+
         {
             IWebElement contextMenulink = driver.FindElement(By.LinkText("Context Menu"));
             contextMenulink.Click();
@@ -648,6 +649,41 @@ namespace SeleniumTest
             string expectedNoFramesTagText = "Frames are not rendering.";
 
             Assert.AreEqual(expectedNoFramesTagText, actualNoFramesTagText);
+        }
+
+        [Test, Order(31)]
+        public void NotificationMessageTest()
+        {
+            driver.Navigate().GoToUrl("http://the-internet.herokuapp.com/notification_message_rendered");
+            driver.FindElement(By.LinkText("Click here")).Click();
+            IWebElement notice;
+            try
+            {
+                notice = driver.FindElement(By.Id("flash"));
+                string actualNoticeText = notice.Text;
+                actualNoticeText = actualNoticeText.Replace("\r\n×", string.Empty);
+                string expectedNoticeText = ConfigurationManager.AppSettings.Get("noticeText");
+                Assert.AreEqual(expectedNoticeText, actualNoticeText);
+
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
+            }
+
+        }
+
+        [Test, Order(32)]
+        public void ShadowDOMTest()
+        {
+            driver.Navigate().GoToUrl("http://the-internet.herokuapp.com/shadowdom");
+            string spantext = driver.FindElement(By.XPath("//span")).GetAttribute("innerHTML");
+            string expectedSpantext = ConfigurationManager.AppSettings["spanTextDOM"];
+            Assert.AreEqual(expectedSpantext, spantext);
+
+            driver.Navigate().GoToUrl("http://the-internet.herokuapp.com/shadowdom");
+            string liText = driver.FindElement(By.XPath("//span")).GetAttribute("innerHTML");
+            Assert.AreEqual(expectedSpantext, liText);
         }
 
         [TearDown]
